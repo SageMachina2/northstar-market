@@ -19,9 +19,22 @@ export async function loadCart() {
   // Read CART_STORAGE_KEY with AsyncStorage.getItem().
   // If nothing has been saved, return [].
   // If data exists, convert it back to JavaScript with JSON.parse().
+
+  const savedCartText = await AsyncStorage.getItem(CART_STORAGE_KEY)
+  
+
+  if (savedCartText === null) {
+    return [];
+  }
+  
+  return JSON.parse(savedCartText);
+
 }
 
 export async function clearSavedCart() {
   // TODO 3:
   // Remove only CART_STORAGE_KEY. Do not use AsyncStorage.clear().
-}
+    await AsyncStorage.removeItem(
+      CART_STORAGE_KEY
+    );
+  }
