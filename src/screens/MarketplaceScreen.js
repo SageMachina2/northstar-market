@@ -51,6 +51,25 @@ export default function MarketplaceScreen() {
     // If item already exists, increase its quantity.
     // Otherwise add it with quantity: 1.
     // Then update state AND call saveCart(updatedCart).
+    const existingItem = cartItems.find(
+      (item) => item.id === product.id
+    );
+
+    const updatedCart = existingItem
+    ? cartItems.map((item) =>
+    item.id === product.id
+    ? {...item, quantity: item.quantity + 1}
+    : item
+  )
+  : [...cartItems, { ...product, quantity: 1}];
+
+  try {
+    setCartItems(updatedCart);
+    await saveCart(updatedCart);
+    setStorageError('');
+  } catch (error) {
+    setStorageError("Unable to save cart.");
+  }
   }
 
   async function increaseQuantity(productId) {
