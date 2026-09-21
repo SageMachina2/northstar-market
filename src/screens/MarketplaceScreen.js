@@ -122,7 +122,17 @@ export default function MarketplaceScreen() {
     // TODO 8:
     // Use filter() to remove the matching id.
     // Update state and storage.
-    
+    const updatedCart = cartItems.filter(
+      (item) => item.id !== productId
+    );
+
+    try {
+      setCartItems(updatedCart);
+      await saveCart(updatedCart);
+      setStorageError("");
+    } catch (error) {
+      setStorageError("Unable to save cart.");
+    }
   }
 
   async function clearCart() {
