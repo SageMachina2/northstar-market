@@ -5,6 +5,13 @@ export const CART_STORAGE_KEY = 'northstar-shopping-cart';
 export async function saveCart(items) {
   // TODO 1:
   // Convert the cart array to JSON text and save it with AsyncStorage.setItem().
+
+  const cartJSONConvert = JSON.stringify(items);
+
+  await AsyncStorage.setItem(
+    CART_STORAGE_KEY,
+    cartJSONConvert
+  );
 }
 
 export async function loadCart() {
