@@ -28,6 +28,20 @@ export default function MarketplaceScreen() {
   // Required flow:
   // isLoading true -> loadCart() -> setCartItems() -> catch error -> finally setIsLoading(false)
 
+  useEffect(() => {
+    async function restoreCart() {
+      try {
+        const SavedCart = await loadCart();
+        setCartItems(SavedCart);
+      } catch (error) {
+        setStorageError("Unable to restore your saved cart.")
+      } finally {
+        setIsLoading(false);
+      }
+    }      
+    restoreCart();
+  }, []);
+
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.trim().toLowerCase())
   );
